@@ -10,6 +10,22 @@ echo User: root Password: $ROOT_PASSWORD
 # start supervisord
 /usr/bin/supervisord
 
+mkdir -p /var/lib/bind
+chown root:bind /var/lib/bind
+
+# populate default configuration if it does not exist
+if [ ! -f /var/lib/bind/named.conf ]; then
+	mv /etc/bind/named.conf /var/lib/bind/
+	mv /etc/bind/named.conf.options /var/lib/bind/
+	mv /etc/bind/named.conf.local /var/lib/bind/
+	mv /etc/bind/named.conf.default-zones /var/lib/bind/
+fi
+
+ln -sf /var/lib/bind/named.conf /etc/bind/
+ln -sf /var/lib/bind/named.conf.options /etc/bind/
+ln -sf /var/lib/bind/named.conf.local /etc/bind/
+ln -sf /var/lib/bind/named.conf.default-zones /etc/bind/
+
 appStart () {
 	/etc/init.d/webmin start
 	supervisorctl start named
