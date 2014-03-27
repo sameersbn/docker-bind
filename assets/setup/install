@@ -31,7 +31,7 @@ cat > /etc/supervisor/conf.d/named.conf <<EOF
 directory=/
 command=/usr/sbin/named -u bind -g
 user=root
-autostart=true
+autostart=false
 autorestart=true
 stdout_logfile=/var/log/supervisor/%(program_name)s.log
 stderr_logfile=/var/log/supervisor/%(program_name)s_error.log

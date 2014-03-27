@@ -12,6 +12,7 @@ echo User: root Password: $ROOT_PASSWORD
 
 appStart () {
 	/etc/init.d/webmin start
+	supervisorctl start named
 	tail -F /var/log/supervisor/supervisord.log
 }
 
