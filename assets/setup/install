@@ -30,7 +30,7 @@ cat > /etc/supervisor/conf.d/named.conf <<EOF
 [program:named]
 directory=/
 command=/usr/sbin/named -u bind -g
-user=bind
+user=root
 autostart=true
 autorestart=true
 stdout_logfile=/var/log/supervisor/%(program_name)s.log
