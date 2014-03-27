@@ -11,7 +11,6 @@ echo User: root Password: $ROOT_PASSWORD
 /usr/bin/supervisord
 
 appStart () {
-	/etc/init.d/bind9 start
 	/etc/init.d/webmin start
 	tail -F /var/log/supervisor/supervisord.log
 }
