@@ -32,6 +32,7 @@ RUN chmod 700 /root/.ssh && chmod 600 /root/.ssh/authorized_keys && chown root:r
 
 EXPOSE 22
 EXPOSE 53
+EXPOSE 10000
 
 ENTRYPOINT ["/app/init"]
 CMD ["app:start"]
