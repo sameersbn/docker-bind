@@ -11,21 +11,20 @@ echo User: root Password: $ROOT_PASSWORD
 /usr/bin/supervisord
 
 chown -R root:bind /app/data
-mkdir -p /var/lib/bind
-chown root:bind /var/lib/bind
 
 # populate default configuration if it does not exist
-if [ ! -f /var/lib/bind/named.conf ]; then
-	mv /etc/bind/named.conf /var/lib/bind/
-	mv /etc/bind/named.conf.options /var/lib/bind/
-	mv /etc/bind/named.conf.local /var/lib/bind/
-	mv /etc/bind/named.conf.default-zones /var/lib/bind/
+if [ ! -d /app/data/etc ]; then
+	mv /etc/bind /app/data/etc
 fi
+rm -rf /etc/bind
+ln -sf /app/data/etc /etc/bind
 
-ln -sf /var/lib/bind/named.conf /etc/bind/
-ln -sf /var/lib/bind/named.conf.options /etc/bind/
-ln -sf /var/lib/bind/named.conf.local /etc/bind/
-ln -sf /var/lib/bind/named.conf.default-zones /etc/bind/
+if [ ! -d /app/data/lib ]; then
+	mkdir -p /app/data/lib
+	chown root:bind /app/data/lib
+fi
+rm -rf /var/lib/bind
+ln -sf /app/data/lib /var/lib/bind
 
 appStart () {
 	/etc/init.d/webmin start
