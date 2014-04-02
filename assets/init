@@ -10,6 +10,7 @@ echo User: root Password: $ROOT_PASSWORD
 # start supervisord
 /usr/bin/supervisord
 
+chown -R root:bind /app/data
 mkdir -p /var/lib/bind
 chown root:bind /var/lib/bind
 

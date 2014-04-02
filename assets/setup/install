@@ -2,6 +2,8 @@
 
 WEBMIN_VERSION=1.680
 
+mkdir -p /app/data
+
 # install webmin, use local copy .deb file if available
 if [ -f /app/setup/webmin_${WEBMIN_VERSION}_all.deb ]; then
 	dpkg -i /app/setup/webmin_${WEBMIN_VERSION}_all.deb
