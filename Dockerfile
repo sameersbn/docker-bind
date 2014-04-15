@@ -34,5 +34,7 @@ EXPOSE 22
 EXPOSE 53
 EXPOSE 10000
 
+VOLUME ["/app/data"]
+
 ENTRYPOINT ["/app/init"]
 CMD ["app:start"]
