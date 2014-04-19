@@ -9,7 +9,9 @@ echo User: root Password: $ROOT_PASSWORD
 
 # start supervisord
 /usr/bin/supervisord
+supervisorctl start sshd
 
+chmod 775 /app/data
 chown -R root:bind /app/data
 
 # populate default configuration if it does not exist
@@ -27,8 +29,8 @@ rm -rf /var/lib/bind
 ln -sf /app/data/lib /var/lib/bind
 
 appStart () {
-	/etc/init.d/webmin start
 	supervisorctl start named
+	/etc/init.d/webmin start
 	tail -F /var/log/supervisor/supervisord.log
 }
 
