@@ -13,7 +13,7 @@ RUN /app/setup/install
 
 ADD authorized_keys /root/.ssh/
 
-EXPOSE 53
+EXPOSE 53/udp
 EXPOSE 10000
 
 VOLUME ["/app/data"]
