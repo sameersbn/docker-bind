@@ -12,21 +12,24 @@ echo User: root Password: $ROOT_PASSWORD
 supervisorctl start sshd
 
 chmod 775 /app/data
-chown -R root:bind /app/data
 
-# populate default configuration if it does not exist
-if [ ! -d /app/data/etc ]; then
-	mv /etc/bind /app/data/etc
+# create directory for bind config
+mkdir -p /app/data/bind
+chown -R root:bind /app/data/bind
+
+# populate default bind configuration if it does not exist
+if [ ! -d /app/data/bind/etc ]; then
+	mv /etc/bind /app/data/bind/etc
 fi
 rm -rf /etc/bind
-ln -sf /app/data/etc /etc/bind
+ln -sf /app/data/bind/etc /etc/bind
 
-if [ ! -d /app/data/lib ]; then
-	mkdir -p /app/data/lib
-	chown root:bind /app/data/lib
+if [ ! -d /app/data/bind/lib ]; then
+	mkdir -p /app/data/bind/lib
+	chown root:bind /app/data/bind/lib
 fi
 rm -rf /var/lib/bind
-ln -sf /app/data/lib /var/lib/bind
+ln -sf /app/data/bind/lib /var/lib/bind
 
 appStart () {
 	supervisorctl start named
