@@ -7,9 +7,12 @@ RUN apt-get update && \
 			apt-show-versions python && \
 		apt-get clean # 20140418
 
-ADD assets/ /app/
-RUN chmod 755 /app/init /app/setup/install
+ADD assets/setup/ /app/setup/
+RUN chmod 755 /app/setup/install
 RUN /app/setup/install
+
+ADD assets/init /app/init
+RUN chmod 755 /app/init
 
 ADD authorized_keys /root/.ssh/
 
