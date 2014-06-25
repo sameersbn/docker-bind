@@ -1,11 +1,11 @@
-FROM sameersbn/ubuntu:12.04.20140418
+FROM sameersbn/ubuntu:12.04.20140519
 MAINTAINER sameer@damagehead.com
 
 RUN apt-get update && \
 		apt-get install -y bind9 perl libnet-ssleay-perl openssl \
 			libauthen-pam-perl libpam-runtime libio-pty-perl \
 			apt-show-versions python && \
-		apt-get clean # 20140418
+		apt-get clean # 20140625
 
 ADD assets/setup/ /app/setup/
 RUN chmod 755 /app/setup/install
