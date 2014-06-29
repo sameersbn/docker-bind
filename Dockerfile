@@ -15,5 +15,5 @@ RUN chmod 755 /init
 
 EXPOSE 53/udp
 EXPOSE 10000
-VOLUME ["/app/data"]
+VOLUME ["/data"]
 CMD ["/init"]
