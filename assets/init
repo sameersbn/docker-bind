@@ -37,38 +37,5 @@ fi
 rm -rf /etc/webmin
 ln -sf /app/data/webmin/etc /etc/webmin
 
-appStart () {
-	/etc/init.d/webmin start
-	/usr/sbin/named -u bind -g
-}
-
-appHelp () {
-	echo "Available options:"
-	echo " app:start          - Start the app and watch the supervisor log (default)"
-	echo " app:help           - Displays the help"
-	echo " [command]          - Execute the specified linux command eg. bash."
-}
-
-case "$1" in
-	app:start)
-		appStart
-		;;
-	app:help)
-		appHelp
-		;;
-	*)
-		if [ -x $1 ]; then
-			$1
-		else
-			prog=$(which $1)
-			if [ -n "${prog}" ] ; then
-				shift 1
-				$prog $@
-			else
-				appHelp
-			fi
-		fi
-		;;
-esac
-
-exit 0
+/etc/init.d/webmin start
+/usr/sbin/named -u bind -g

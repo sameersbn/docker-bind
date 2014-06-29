@@ -19,5 +19,4 @@ EXPOSE 10000
 
 VOLUME ["/app/data"]
 
-ENTRYPOINT ["/app/init"]
-CMD ["app:start"]
+CMD ["/app/init"]
