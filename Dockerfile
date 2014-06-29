@@ -10,10 +10,6 @@ RUN apt-get update && \
 		dpkg -i /tmp/webmin_${WEBMIN_VERSION}_all.deb && rm -rf /tmp/webmin_${WEBMIN_VERSION}_all.deb && \
 		apt-get clean # 20140625
 
-ADD assets/setup/ /app/setup/
-RUN chmod 755 /app/setup/install
-RUN /app/setup/install
-
 ADD assets/init /app/init
 RUN chmod 755 /app/init
 
