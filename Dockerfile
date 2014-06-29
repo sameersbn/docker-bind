@@ -14,8 +14,6 @@ RUN /app/setup/install
 ADD assets/init /app/init
 RUN chmod 755 /app/init
 
-ADD authorized_keys /root/.ssh/
-
 EXPOSE 53/udp
 EXPOSE 10000
 

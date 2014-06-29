@@ -9,7 +9,6 @@ echo User: root Password: $ROOT_PASSWORD
 
 # start supervisord
 /usr/bin/supervisord
-supervisorctl start sshd
 
 chmod 775 /app/data
 
