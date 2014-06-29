@@ -27,7 +27,8 @@ docker build -t="$USER/bind" .
 Run the image
 
 ```
-docker run --name='bind' -d -p 10000:10000 sameersbn/bind:latest
+docker run --name='bind' -d -p 53:53/udp -p 10000:10000 \
+sameersbn/bind:latest
 ```
 
 Point your browser to `http://localhost:10000` and login as root. A random password is assigned for the root user. This password can be retrieved from the container logs.
@@ -42,7 +43,7 @@ Please note that the password is not persistent and changes every time the image
 You should mount a volume at `/data` for persistence of your bind server configuration.
 
 ```
-docker run --name='bind' -d -p 10000:10000 \
+docker run --name='bind' -d -p 53:53/udp -p 10000:10000 \
 -v /opt/bind:/data sameersbn/bind:latest
 ```
 
