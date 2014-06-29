@@ -41,9 +41,8 @@ rm -rf /etc/webmin
 ln -sf /app/data/webmin/etc /etc/webmin
 
 appStart () {
-	supervisorctl start named
 	/etc/init.d/webmin start
-	tail -F /var/log/supervisor/supervisord.log
+	/usr/sbin/named -u bind -g
 }
 
 appHelp () {
