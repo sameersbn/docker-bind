@@ -1,18 +1,6 @@
 #!/bin/bash
 set -e
 
-mkdir -p /app/data
-
-# install webmin, use local copy .deb file if available
-WEBMIN_VERSION=1.690
-if [ -f /app/setup/webmin_${WEBMIN_VERSION}_all.deb ]; then
-	dpkg -i /app/setup/webmin_${WEBMIN_VERSION}_all.deb
-else
-	wget "http://prdownloads.sourceforge.net/webadmin/webmin_${WEBMIN_VERSION}_all.deb" -P /tmp/
-	dpkg -i /tmp/webmin_${WEBMIN_VERSION}_all.deb
-	rm -rf /tmp/webmin_${WEBMIN_VERSION}_all.deb
-fi
-
 mkdir -p /var/run/named
 chmod 775 /var/run/named
 chown root:bind /var/run/named >/dev/null 2>&1 || true
