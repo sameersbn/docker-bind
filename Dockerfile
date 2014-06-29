@@ -10,12 +10,12 @@ RUN apt-get update && \
 		dpkg -i /tmp/webmin_${WEBMIN_VERSION}_all.deb && rm -rf /tmp/webmin_${WEBMIN_VERSION}_all.deb && \
 		apt-get clean # 20140625
 
-ADD assets/init /app/init
-RUN chmod 755 /app/init
+ADD init /init
+RUN chmod 755 /init
 
 EXPOSE 53/udp
 EXPOSE 10000
 
 VOLUME ["/app/data"]
 
-CMD ["/app/init"]
+CMD ["/init"]
