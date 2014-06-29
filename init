@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # generate a password for root.
