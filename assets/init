@@ -7,9 +7,6 @@ ROOT_PASSWORD=$(pwgen -c -n -1 12)
 echo "root:$ROOT_PASSWORD" | chpasswd
 echo User: root Password: $ROOT_PASSWORD
 
-# start supervisord
-/usr/bin/supervisord
-
 chmod 775 /app/data
 
 # create directory for bind config
