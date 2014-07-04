@@ -40,4 +40,4 @@ ln -sf /data/webmin/etc /etc/webmin
 
 mkdir -m 0775 -p /var/run/named
 chown root:bind /var/run/named
-/usr/sbin/named -u bind -g
+exec /usr/sbin/named -u bind -g
