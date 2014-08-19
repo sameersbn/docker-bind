@@ -9,7 +9,7 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes && \
 			apt-show-versions python && \
 		wget "http://prdownloads.sourceforge.net/webadmin/webmin_${WEBMIN_VERSION}_all.deb" -P /tmp/ && \
 		dpkg -i /tmp/webmin_${WEBMIN_VERSION}_all.deb && rm -rf /tmp/webmin_${WEBMIN_VERSION}_all.deb && \
-		apt-get clean && rm -rf /var/lib/apt/lists/* # 20140818
+		rm -rf /var/lib/apt/lists/* # 20140818
 
 ADD start /start
 RUN chmod 755 /start
