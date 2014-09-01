@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:12.04.20140818
+FROM sameersbn/ubuntu:14.04.20140818
 MAINTAINER sameer@damagehead.com
 
 ENV WEBMIN_VERSION 1.700
