@@ -1,7 +1,7 @@
 FROM sameersbn/ubuntu:14.04.20150220
 MAINTAINER sameer@damagehead.com
 
-ENV WEBMIN_VERSION 1.720
+ENV WEBMIN_VERSION 1.730
 RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
  && apt-get update \
  && apt-get install -y bind9 perl libnet-ssleay-perl openssl \
