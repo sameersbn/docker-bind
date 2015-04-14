@@ -41,13 +41,15 @@ docker run --name='bind' -d -p 53:53/udp -p 10000:10000 \
 sameersbn/bind:latest
 ```
 
-Point your browser to `https://localhost:10000` and login as root. A random password is assigned for the root user. This password can be retrieved from the container logs.
+By default, the container will start webmin where you can configure bind using the web interface. Point your browser to `https://localhost:10000` and login as root. A random password is assigned for the root user. This password can be retrieved from the container logs.
 
 ```bash
 docker logs bind 2>&1 | grep '^User: ' | tail -n1
 ```
 
 Please note that the password is not persistent and changes every time the image is executed.
+
+If you do not want the webmin server to be started, you can specify `-e WEBMIN_ENABLED=false` in the docker command line.
 
 # Data Store
 You should mount a volume at `/data` for persistence of your bind server configuration.
