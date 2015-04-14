@@ -1,4 +1,5 @@
 # Table of Contents
+
 - [Introduction](#introduction)
 - [Contributing](#contributing)
 - [Installation](#installation)
@@ -8,6 +9,7 @@
 - [Upgrading](#upgrading)
 
 # Introduction
+
 Dockerfile to build a bind dns server image with webmin for easy configuration.
 
 # Contributing
@@ -19,6 +21,7 @@ If you find this image useful here's how you can help:
 - Send me a tip via [Bitcoin](https://www.coinbase.com/sameersbn) or using [Gratipay](https://gratipay.com/sameersbn/)
 
 # Installation
+
 Pull the latest version of the image from the docker index. This is the recommended method of installation as it is easier to update image in the future. These builds are performed by the **Docker Trusted Build** service.
 
 ```
@@ -34,6 +37,7 @@ docker build -t="$USER/bind" .
 ```
 
 # Quick Start
+
 Run the image
 
 ```
