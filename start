@@ -35,7 +35,7 @@ ln -sf /data/webmin/etc /etc/webmin
 
 if [ "${WEBMIN_ENABLED}" == "true" ]; then
   # set root password so that we can login via webmin
-  ROOT_PASSWORD=$(pwgen -c -n -1 12)
+  ROOT_PASSWORD=${ROOT_PASSWORD:-$(pwgen -c -n -1 12)}
   echo "root:$ROOT_PASSWORD" | chpasswd
   echo User: root Password: $ROOT_PASSWORD
 

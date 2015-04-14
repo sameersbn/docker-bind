@@ -51,6 +51,8 @@ Please note that the password is not persistent and changes every time the image
 
 If you do not want the webmin server to be started, you can specify `-e WEBMIN_ENABLED=false` in the docker command line.
 
+If you do not want a random password for the root user, you can specify it using the `ROOT_PASSWORD` configuration option, eg. `-e ROOT_PASSWORD=password`. Please note that the root password is only set if `WEBMIN_ENABLED=true`.
+
 # Data Store
 You should mount a volume at `/data` for persistence of your bind server configuration.
 
