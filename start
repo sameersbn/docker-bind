@@ -3,11 +3,6 @@ set -e
 
 WEBMIN_ENABLED=${WEBMIN_ENABLED:-true}
 
-# generate a password for root.
-ROOT_PASSWORD=$(pwgen -c -n -1 12)
-echo "root:$ROOT_PASSWORD" | chpasswd
-echo User: root Password: $ROOT_PASSWORD
-
 chmod 775 /data
 
 # create directory for bind config
@@ -39,6 +34,11 @@ rm -rf /etc/webmin
 ln -sf /data/webmin/etc /etc/webmin
 
 if [ "${WEBMIN_ENABLED}" == "true" ]; then
+  # set root password so that we can login via webmin
+  ROOT_PASSWORD=$(pwgen -c -n -1 12)
+  echo "root:$ROOT_PASSWORD" | chpasswd
+  echo User: root Password: $ROOT_PASSWORD
+
   echo "Starting webmin..."
   /etc/init.d/webmin start
 fi
