@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/sameersbn/docker-bind.svg?style=svg)](https://circleci.com/gh/sameersbn/docker-bind)
+
 # Table of Contents
 
 - [Introduction](#introduction)
