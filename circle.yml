@@ -7,5 +7,5 @@ dependencies:
     - docker build -t sameersbn/bind .
 test:
   override:
-    - docker run -d -p 53:53 sameersbn/bind; sleep 10
+    - docker run -d -p 53:53/udp sameersbn/bind; sleep 10
     - host www.google.com 127.0.0.1
