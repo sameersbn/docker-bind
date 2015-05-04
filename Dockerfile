@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20150323
+FROM sameersbn/ubuntu:14.04.20150504
 MAINTAINER sameer@damagehead.com
 
 ENV WEBMIN_VERSION 1.740
@@ -10,7 +10,7 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
  && wget "http://prdownloads.sourceforge.net/webadmin/webmin_${WEBMIN_VERSION}_all.deb" -P /tmp/ \
  && dpkg -i /tmp/webmin_${WEBMIN_VERSION}_all.deb \
  && rm -rf /tmp/webmin_${WEBMIN_VERSION}_all.deb \
- && rm -rf /var/lib/apt/lists/* # 20150323
+ && rm -rf /var/lib/apt/lists/* # 20150504
 
 ADD start /start
 RUN chmod 755 /start
