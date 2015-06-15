@@ -15,7 +15,6 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
 COPY start /start
 RUN chmod 755 /start
 
-EXPOSE 53/udp
-EXPOSE 10000
+EXPOSE 53/udp 10000/tcp
 VOLUME ["/data"]
 CMD ["/start"]
