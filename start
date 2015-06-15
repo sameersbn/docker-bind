@@ -3,35 +3,35 @@ set -e
 
 WEBMIN_ENABLED=${WEBMIN_ENABLED:-true}
 
-chmod 775 /data
+chmod 775 ${DATA_DIR}
 
 # create directory for bind config
-mkdir -p /data/bind
-chown -R root:${BIND_USER} /data/bind
+mkdir -p ${DATA_DIR}/bind
+chown -R root:${BIND_USER} ${DATA_DIR}/bind
 
 # populate default bind configuration if it does not exist
-if [ ! -d /data/bind/etc ]; then
-  mv /etc/bind /data/bind/etc
+if [ ! -d ${DATA_DIR}/bind/etc ]; then
+  mv /etc/bind ${DATA_DIR}/bind/etc
 fi
 rm -rf /etc/bind
-ln -sf /data/bind/etc /etc/bind
+ln -sf ${DATA_DIR}/bind/etc /etc/bind
 
-if [ ! -d /data/bind/lib ]; then
-  mkdir -p /data/bind/lib
-  chown root:${BIND_USER} /data/bind/lib
+if [ ! -d ${DATA_DIR}/bind/lib ]; then
+  mkdir -p ${DATA_DIR}/bind/lib
+  chown root:${BIND_USER} ${DATA_DIR}/bind/lib
 fi
 rm -rf /var/lib/bind
-ln -sf /data/bind/lib /var/lib/bind
+ln -sf ${DATA_DIR}/bind/lib /var/lib/bind
 
 # create directory for webmin
-mkdir -p /data/webmin
+mkdir -p ${DATA_DIR}/webmin
 
 # populate the default webmin configuration if it does not exist
-if [ ! -d /data/webmin/etc ]; then
-  mv /etc/webmin /data/webmin/etc
+if [ ! -d ${DATA_DIR}/webmin/etc ]; then
+  mv /etc/webmin ${DATA_DIR}/webmin/etc
 fi
 rm -rf /etc/webmin
-ln -sf /data/webmin/etc /etc/webmin
+ln -sf ${DATA_DIR}/webmin/etc /etc/webmin
 
 if [ "${WEBMIN_ENABLED}" == "true" ]; then
   if [ -z "${ROOT_PASSWORD}" ]; then

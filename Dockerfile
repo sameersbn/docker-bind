@@ -1,7 +1,8 @@
 FROM sameersbn/ubuntu:14.04.20150613
 MAINTAINER sameer@damagehead.com
 
-ENV BIND_USER=bind \
+ENV DATA_DIR=/data \
+    BIND_USER=bind \
     WEBMIN_VERSION=1.740
 
 RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
@@ -18,5 +19,5 @@ COPY start /start
 RUN chmod 755 /start
 
 EXPOSE 53/udp 10000/tcp
-VOLUME ["/data"]
+VOLUME ["${DATA_DIR}"]
 CMD ["/start"]
