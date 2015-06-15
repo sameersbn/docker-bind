@@ -43,20 +43,19 @@ if [ "${WEBMIN_ENABLED}" == "true" ]; then
   fi
   rm -rf /etc/webmin
   ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
+
+  # generate a random password for root
+  if [ -z "${ROOT_PASSWORD}" ]; then
+    ROOT_PASSWORD=$(pwgen -c -n -1 12)
+    echo User: root Password: $ROOT_PASSWORD
+  fi
+  echo "root:$ROOT_PASSWORD" | chpasswd
+
+  echo "Starting webmin..."
+  /etc/init.d/webmin start
 fi
 
 if [ -z "$@" ]; then
-  if [ "${WEBMIN_ENABLED}" == "true" ]; then
-    if [ -z "${ROOT_PASSWORD}" ]; then
-      # generate a random password for root
-      ROOT_PASSWORD=$(pwgen -c -n -1 12)
-      echo User: root Password: $ROOT_PASSWORD
-    fi
-    echo "root:$ROOT_PASSWORD" | chpasswd
-
-    echo "Starting webmin..."
-    /etc/init.d/webmin start
-  fi
   echo "Starting named..."
   exec /usr/sbin/named -u ${BIND_USER} -g
 else
