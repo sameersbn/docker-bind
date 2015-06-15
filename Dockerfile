@@ -5,9 +5,6 @@ ENV DATA_DIR=/data \
     BIND_USER=bind \
     WEBMIN_VERSION=1.740
 
-ENV BIND_DATA_DIR=${DATA_DIR}/bind \
-    WEBMIN_DATA_DIR=${DATA_DIR}/webmin
-
 RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
  && apt-get update \
  && apt-get install -y bind9 perl libnet-ssleay-perl openssl \

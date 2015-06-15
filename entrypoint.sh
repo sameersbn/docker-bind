@@ -1,8 +1,14 @@
 #!/bin/bash
 set -e
 
+# script variables
+BIND_DATA_DIR=${DATA_DIR}/bind
+WEBMIN_DATA_DIR=${DATA_DIR}/webmin
+
+# configuration variables
 WEBMIN_ENABLED=${WEBMIN_ENABLED:-true}
 
+## ...and here we go
 chmod 775 ${DATA_DIR}
 
 # create directory for bind config
