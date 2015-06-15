@@ -29,19 +29,21 @@ fi
 rm -rf /var/lib/bind
 ln -sf ${BIND_DATA_DIR}/lib /var/lib/bind
 
-# create directory for webmin
-mkdir -p ${WEBMIN_DATA_DIR}
-
-# populate the default webmin configuration if it does not exist
-if [ ! -d ${WEBMIN_DATA_DIR}/etc ]; then
-  mv /etc/webmin ${WEBMIN_DATA_DIR}/etc
-fi
-rm -rf /etc/webmin
-ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
-
 # create /var/run/named
 mkdir -m 0775 -p /var/run/named
 chown root:${BIND_USER} /var/run/named
+
+if [ "${WEBMIN_ENABLED}" == "true" ]; then
+  # create directory for webmin
+  mkdir -p ${WEBMIN_DATA_DIR}
+
+  # populate the default webmin configuration if it does not exist
+  if [ ! -d ${WEBMIN_DATA_DIR}/etc ]; then
+    mv /etc/webmin ${WEBMIN_DATA_DIR}/etc
+  fi
+  rm -rf /etc/webmin
+  ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
+fi
 
 if [ -z "$@" ]; then
   if [ "${WEBMIN_ENABLED}" == "true" ]; then
