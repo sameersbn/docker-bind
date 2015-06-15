@@ -48,4 +48,9 @@ fi
 echo "Starting named..."
 mkdir -m 0775 -p /var/run/named
 chown root:${BIND_USER} /var/run/named
-exec /usr/sbin/named -u ${BIND_USER} -g
+
+if [ -z "$@" ]; then
+  exec /usr/sbin/named -u ${BIND_USER} -g
+else
+  exec "$@"
+fi
