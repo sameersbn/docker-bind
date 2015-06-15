@@ -12,7 +12,7 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
  && rm -rf /tmp/webmin_${WEBMIN_VERSION}_all.deb \
  && rm -rf /var/lib/apt/lists/* # 20150613
 
-ADD start /start
+COPY start /start
 RUN chmod 755 /start
 
 EXPOSE 53/udp
