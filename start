@@ -24,14 +24,14 @@ rm -rf /var/lib/bind
 ln -sf ${BIND_DATA_DIR}/lib /var/lib/bind
 
 # create directory for webmin
-mkdir -p ${DATA_DIR}/webmin
+mkdir -p ${WEBMIN_DATA_DIR}
 
 # populate the default webmin configuration if it does not exist
-if [ ! -d ${DATA_DIR}/webmin/etc ]; then
-  mv /etc/webmin ${DATA_DIR}/webmin/etc
+if [ ! -d ${WEBMIN_DATA_DIR}/etc ]; then
+  mv /etc/webmin ${WEBMIN_DATA_DIR}/etc
 fi
 rm -rf /etc/webmin
-ln -sf ${DATA_DIR}/webmin/etc /etc/webmin
+ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
 
 if [ "${WEBMIN_ENABLED}" == "true" ]; then
   if [ -z "${ROOT_PASSWORD}" ]; then
