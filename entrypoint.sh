@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+ROOT_PASSWORD=${ROOT_PASSWORD:-password}
+
 # script variables
 BIND_DATA_DIR=${DATA_DIR}/bind
 WEBMIN_DATA_DIR=${DATA_DIR}/webmin
@@ -44,11 +46,7 @@ if [ "${WEBMIN_ENABLED}" == "true" ]; then
   rm -rf /etc/webmin
   ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
 
-  # generate a random password for root
-  if [ -z "${ROOT_PASSWORD}" ]; then
-    ROOT_PASSWORD=$(pwgen -c -n -1 12)
-    echo User: root Password: $ROOT_PASSWORD
-  fi
+  # set root user password
   echo "root:$ROOT_PASSWORD" | chpasswd
 
   echo "Starting webmin..."
