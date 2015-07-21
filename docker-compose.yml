@@ -4,3 +4,4 @@ Bind:
     - "53:53/udp"
   volumes:
     - /srv/docker/bind:/data
+  restart: always
