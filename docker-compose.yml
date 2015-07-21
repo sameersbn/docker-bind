@@ -1,0 +1,6 @@
+Bind:
+  image: sameersbn/bind:latest
+  ports:
+    - "53:53/udp"
+  volumes:
+    - /srv/docker/bind:/data
