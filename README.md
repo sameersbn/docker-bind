@@ -80,7 +80,7 @@ Read the blog post [Deploying a DNS Server using Docker](http://www.damagehead.c
 
 For the BIND to preserve its state across container shutdown and startup you should mount a volume at `/data`.
 
-> **Note**: *The [Quickstart](#quickstart) command already mounts a volume for persistence.*
+> *The [Quickstart](#quickstart) command already mounts a volume for persistence.*
 
 SELinux users should update the security context of the host mountpoint so that it plays nicely with Docker:
 
