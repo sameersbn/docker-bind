@@ -1,116 +1,130 @@
-[![Circle CI](https://circleci.com/gh/sameersbn/docker-bind.svg?style=svg)](https://circleci.com/gh/sameersbn/docker-bind)
+[![Circle CI](https://circleci.com/gh/sameersbn/docker-bind.svg?style=shield)](https://circleci.com/gh/sameersbn/docker-bind)
 
-# Table of Contents
+# sameersbn/bind
 
 - [Introduction](#introduction)
-- [Contributing](#contributing)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Data Store](#data-store)
-- [Shell Access](#shell-access)
-- [Upgrading](#upgrading)
+  - [Contributing](#contributing)
+  - [Issues](#issues)
+- [Getting started](#getting-started)
+  - [Installation](#installation)
+  - [Quickstart](#quickstart)
+  - [Persistence](#persistence)
+- [Maintenance](#maintenance)
+  - [Upgrading](#upgrading)
+  - [Shell Access](#shell-access)
 
 # Introduction
 
-Dockerfile to build a bind dns server image with webmin for easy configuration.
+`Dockerfile` to create a [Docker](https://www.docker.com/) container image for [BIND](https://www.isc.org/downloads/bind/) DNS server bundled with the [Webmin](http://www.webmin.com/) interface.
 
-# Contributing
+BIND is open source software that implements the Domain Name System (DNS) protocols for the Internet. It is a reference implementation of those protocols, but it is also production-grade software, suitable for use in high-volume and high-reliability applications.
+
+## Contributing
 
 If you find this image useful here's how you can help:
 
-- Send a Pull Request with your awesome new features and bug fixes
-- Help new users with [Issues](https://github.com/sameersbn/docker-bind/issues) they may encounter
+- Send a pull request with your awesome features and bug fixes
+- Help users resolve their [issues](../../issues?q=is%3Aopen+is%3Aissue).
 - Support the development of this image with a [donation](http://www.damagehead.com/donate/)
 
-# Installation
+## Issues
 
-Pull the latest version of the image from the docker index. This is the recommended method of installation as it is easier to update image in the future. These builds are performed by the **Docker Trusted Build** service.
+Before reporting your issue please try updating Docker to the latest version and check if it resolves the issue. Refer to the Docker [installation guide](https://docs.docker.com/installation) for instructions.
 
-```
+SELinux users should try disabling SELinux using the command `setenforce 0` to see if it resolves the issue.
+
+If the above recommendations do not help then [report your issue](../../issues/new) along with the following information:
+
+- Output of the `docker version` and `docker info` commands
+- The `docker run` command or `docker-compose.yml` used to start the image. Mask out the sensitive bits.
+- Please state if you are using [Boot2Docker](http://www.boot2docker.io), [VirtualBox](https://www.virtualbox.org), etc.
+
+# Getting started
+
+## Installation
+
+This image is available as a [trusted build](//hub.docker.com/u/sameersbn/bind) on the [Docker hub](//hub.docker.com) and is the recommended method of installation.
+
+```bash
 docker pull sameersbn/bind:latest
 ```
 
-Alternately you can build the image yourself.
-
-```
-git clone https://github.com/sameersbn/docker-bind.git
-cd docker-bind
-docker build -t="$USER/bind" .
-```
-
-# Quick Start
-
-Run the image
-
-```
-docker run --name='bind' -d -p 53:53/udp -p 10000:10000 \
-sameersbn/bind:latest
-```
-
-By default, the container will start webmin where you can configure bind using the web interface. Point your browser to `https://localhost:10000` and login as root. A random password is assigned for the root user. This password can be retrieved from the container logs.
+Alternatively you can build the image yourself.
 
 ```bash
-docker logs bind 2>&1 | grep '^User: ' | tail -n1
+git clone https://github.com/sameersbn/docker-bind.git
+cd docker-bind
+docker build --tag $USER/bind .
 ```
 
-Please note that the password is not persistent and changes every time the image is executed.
+## Quickstart
 
-If you do not want the webmin server to be started, you can specify `-e WEBMIN_ENABLED=false` in the docker command line.
+Start BIND using:
 
-If you do not want a random password for the root user, you can specify it using the `ROOT_PASSWORD` configuration option, eg. `-e ROOT_PASSWORD=password`. Please note that the root password is only set if `WEBMIN_ENABLED=true`.
-
-# Data Store
-You should mount a volume at `/data` for persistence of your bind server configuration.
-
-```
-docker run --name='bind' -d -p 53:53/udp -p 10000:10000 \
--v /opt/bind:/data sameersbn/bind:latest
+```bash
+docker run --name bind -d --restart=always \
+  --publish 53:53/udp --publish 10000:10000 \
+  --volume /srv/docker/bind:/data \
+  sameersbn/bind:latest
 ```
 
-# Shell Access
+*Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
 
-For debugging and maintenance purposes you may want access the containers shell. If you are using docker version `1.3.0` or higher you can access a running containers shell using `docker exec` command.
+When the container is started the [Webmin](http://www.webmin.com/) service is also started and is accessible from the web browser at http://localhost:10000. Login to Webmin with the username `root` and password `password`. Specify `--env ROOT_PASSWORD=secretpassword` on the `docker run` command to set a password of your choosing.
+
+The launch of Webmin can be disabled by adding `--env WEBMIN_ENABLED=false` to the `docker run` command. Note that the `ROOT_PASSWORD` parameter has no effect when the launch of Webmin is disabled.
+
+Read the blog post [Deploying a DNS Server using Docker](http://www.damagehead.com/blog/2015/04/28/deploying-a-dns-server-using-docker/) for an example use case.
+
+## Persistence
+
+For the BIND to preserve its state across container shutdown and startup you should mount a volume at `/data`.
+
+> **Note**: *The [Quickstart](#quickstart) command already mounts a volume for persistence.*
+
+SELinux users should update the security context of the host mountpoint so that it plays nicely with Docker:
+
+```bash
+mkdir -p /srv/docker/bind
+chcon -Rt svirt_sandbox_file_t /srv/docker/bind
+```
+
+# Maintenance
+
+## Upgrading
+
+To upgrade to newer releases:
+
+  1. Download the updated Docker image:
+
+  ```bash
+  docker pull sameersbn/bind:latest
+  ```
+
+  2. Stop the currently running image:
+
+  ```bash
+  docker stop bind
+  ```
+
+  3. Remove the stopped container
+
+  ```bash
+  docker rm -v bind
+  ```
+
+  4. Start the updated image
+
+  ```bash
+  docker run -name bind -d \
+    [OPTIONS] \
+    sameersbn/bind:latest
+  ```
+
+## Shell Access
+
+For debugging and maintenance purposes you may want access the containers shell. If you are using Docker version `1.3.0` or higher you can access a running containers shell by starting `bash` using `docker exec`:
 
 ```bash
 docker exec -it bind bash
-```
-
-If you are using an older version of docker, you can use the [nsenter](http://man7.org/linux/man-pages/man1/nsenter.1.html) linux tool (part of the util-linux package) to access the container shell.
-
-Some linux distros (e.g. ubuntu) use older versions of the util-linux which do not include the `nsenter` tool. To get around this @jpetazzo has created a nice docker image that allows you to install the `nsenter` utility and a helper script named `docker-enter` on these distros.
-
-To install `nsenter` execute the following command on your host,
-
-```bash
-docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
-```
-
-Now you can access the container shell using the command
-
-```bash
-sudo docker-enter bind
-```
-
-For more information refer https://github.com/jpetazzo/nsenter
-
-# Upgrading
-
-To upgrade to newer releases, simply follow this 3 step upgrade procedure.
-
-- **Step 1**: Update the docker image.
-
-```
-docker pull sameersbn/bind:latest
-```
-
-- **Step 2**: Stop the currently running image
-
-```
-docker stop bind
-```
-
-- **Step 3**: Start the image
-
-```
-docker run -name bind -d [OPTIONS] sameersbn/bind:latest
 ```
