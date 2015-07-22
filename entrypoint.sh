@@ -53,9 +53,18 @@ if [ "${WEBMIN_ENABLED}" == "true" ]; then
   /etc/init.d/webmin start
 fi
 
+# allow arguments to be passed to named
+if [[ ${1:0:1} = '-' ]]; then
+  EXTRA_ARGS="$@"
+  set --
+elif [[ ${1} == named || ${1} == $(which named) ]]; then
+  EXTRA_ARGS="${@:2}"
+  set --
+fi
+
 if [ -z "$@" ]; then
   echo "Starting named..."
-  exec /usr/sbin/named -u ${BIND_USER} -g
+  exec $(which named) -u ${BIND_USER} -g ${EXTRA_ARGS}
 else
   exec "$@"
 fi
