@@ -35,24 +35,6 @@ ln -sf ${BIND_DATA_DIR}/lib /var/lib/bind
 mkdir -m 0775 -p /var/run/named
 chown root:${BIND_USER} /var/run/named
 
-if [ "${WEBMIN_ENABLED}" == "true" ]; then
-  # create directory for webmin
-  mkdir -p ${WEBMIN_DATA_DIR}
-
-  # populate the default webmin configuration if it does not exist
-  if [ ! -d ${WEBMIN_DATA_DIR}/etc ]; then
-    mv /etc/webmin ${WEBMIN_DATA_DIR}/etc
-  fi
-  rm -rf /etc/webmin
-  ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
-
-  # set root user password
-  echo "root:$ROOT_PASSWORD" | chpasswd
-
-  echo "Starting webmin..."
-  /etc/init.d/webmin start
-fi
-
 # allow arguments to be passed to named
 if [[ ${1:0:1} = '-' ]]; then
   EXTRA_ARGS="$@"
@@ -62,7 +44,26 @@ elif [[ ${1} == named || ${1} == $(which named) ]]; then
   set --
 fi
 
+# default behaviour is to launch named
 if [ -z "$@" ]; then
+  if [ "${WEBMIN_ENABLED}" == "true" ]; then
+    # create directory for webmin
+    mkdir -p ${WEBMIN_DATA_DIR}
+
+    # populate the default webmin configuration if it does not exist
+    if [ ! -d ${WEBMIN_DATA_DIR}/etc ]; then
+      mv /etc/webmin ${WEBMIN_DATA_DIR}/etc
+    fi
+    rm -rf /etc/webmin
+    ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
+
+    # set root user password
+    echo "root:$ROOT_PASSWORD" | chpasswd
+
+    echo "Starting webmin..."
+    /etc/init.d/webmin start
+  fi
+
   echo "Starting named..."
   exec $(which named) -u ${BIND_USER} -g ${EXTRA_ARGS}
 else
