@@ -44,7 +44,7 @@ If the above recommendations do not help then [report your issue](../../issues/n
 
 ## Installation
 
-This image is available as a [trusted build](//hub.docker.com/u/sameersbn/bind) on the [Docker hub](//hub.docker.com) and is the recommended method of installation.
+This image is available as a [trusted build](//hub.docker.com/r/sameersbn/bind) on the [Docker hub](//hub.docker.com) and is the recommended method of installation.
 
 ```bash
 docker pull sameersbn/bind:latest
