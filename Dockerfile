@@ -21,3 +21,4 @@ RUN chmod 755 /sbin/entrypoint.sh
 EXPOSE 53/udp 10000/tcp
 VOLUME ["${DATA_DIR}"]
 ENTRYPOINT ["/sbin/entrypoint.sh"]
+CMD ["/usr/sbin/named"]

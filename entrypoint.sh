@@ -62,7 +62,7 @@ elif [[ ${1} == named || ${1} == $(which named) ]]; then
 fi
 
 # default behaviour is to launch named
-if [ -z "$@" ]; then
+if [[ -z ${1} ]]; then
   if [ "${WEBMIN_ENABLED}" == "true" ]; then
     create_webmin_data_dir
     set_root_passwd
