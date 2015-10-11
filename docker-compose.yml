@@ -1,5 +1,5 @@
 Bind:
-  image: sameersbn/bind:latest
+  image: quay.io/sameersbn/bind:latest
   ports:
     - "53:53/udp"
   volumes:
