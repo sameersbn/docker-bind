@@ -1,4 +1,4 @@
-FROM quay.io/sameersbn/ubuntu:14.04.20151013
+FROM quay.io/sameersbn/ubuntu:14.04.20151023
 MAINTAINER sameer@damagehead.com
 
 ENV DATA_DIR=/data \
