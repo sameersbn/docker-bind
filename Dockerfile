@@ -3,7 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 ENV DATA_DIR=/data \
     BIND_USER=bind \
-    WEBMIN_VERSION=1.760
+    WEBMIN_VERSION=1.770
 
 RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
  && apt-get update \
