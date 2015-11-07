@@ -1,6 +1,6 @@
 [![Circle CI](https://circleci.com/gh/sameersbn/docker-bind.svg?style=shield)](https://circleci.com/gh/sameersbn/docker-bind) [![Docker Repository on Quay.io](https://quay.io/repository/sameersbn/bind/status "Docker Repository on Quay.io")](https://quay.io/repository/sameersbn/bind)
 
-# quay.io/sameersbn/bind:latest
+# sameersbn/bind:latest
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
@@ -44,10 +44,12 @@ If the above recommendations do not help then [report your issue](../../issues/n
 
 ## Installation
 
-Automated builds of the image are available on [Quay.io](https://quay.io/repository/sameersbn/bind) and is the recommended method of installation.
+Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/sameersbn/bind) and is the recommended method of installation.
+
+> **Note**: Builds are also available on [Quay.io](https://quay.io/repository/sameersbn/bind)
 
 ```bash
-docker pull quay.io/sameersbn/bind:latest
+docker pull sameersbn/bind:latest
 ```
 
 Alternatively you can build the image yourself.
@@ -66,7 +68,7 @@ Start BIND using:
 docker run --name bind -d --restart=always \
   --publish 53:53/udp --publish 10000:10000 \
   --volume /srv/docker/bind:/data \
-  quay.io/sameersbn/bind:latest
+  sameersbn/bind:latest
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -85,7 +87,7 @@ You can customize the launch command of BIND server by specifying arguments to `
 docker run --name bind -it --rm \
   --publish 53:53/udp --publish 10000:10000 \
   --volume /srv/docker/bind:/data \
-  quay.io/sameersbn/bind:latest -h
+  sameersbn/bind:latest -h
 ```
 
 ## Persistence
@@ -110,7 +112,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull quay.io/sameersbn/bind:latest
+  docker pull sameersbn/bind:latest
   ```
 
   2. Stop the currently running image:
@@ -130,7 +132,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name bind -d \
     [OPTIONS] \
-    quay.io/sameersbn/bind:latest
+    sameersbn/bind:latest
   ```
 
 ## Shell Access

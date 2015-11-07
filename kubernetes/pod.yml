@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: bind
-      image: quay.io/sameersbn/bind
+      image: sameersbn/bind
       env:
         - name: WEBMIN_ENABLED
           value: false
