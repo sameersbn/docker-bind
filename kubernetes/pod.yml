@@ -14,3 +14,9 @@ spec:
       ports:
         - containerPort: 53
           protocol: UDP
+      volumeMounts:
+        - mountPath: /data
+          name: data
+  volumes:
+    - name: data
+      emptyDir: {}
