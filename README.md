@@ -55,9 +55,7 @@ docker pull sameersbn/bind:latest
 Alternatively you can build the image yourself.
 
 ```bash
-git clone https://github.com/sameersbn/docker-bind.git
-cd docker-bind
-docker build --tag $USER/bind .
+docker build -t sameersbn/bind github.com/sameersbn/docker-bind
 ```
 
 ## Quickstart
