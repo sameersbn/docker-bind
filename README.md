@@ -64,7 +64,7 @@ Start BIND using:
 
 ```bash
 docker run --name bind -d --restart=always \
-  --publish 53:53/udp --publish 10000:10000 \
+  --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
   sameersbn/bind:latest
 ```
@@ -83,7 +83,7 @@ You can customize the launch command of BIND server by specifying arguments to `
 
 ```bash
 docker run --name bind -it --rm \
-  --publish 53:53/udp --publish 10000:10000 \
+  --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
   sameersbn/bind:latest -h
 ```
