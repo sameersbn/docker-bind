@@ -9,5 +9,5 @@ dependencies:
 test:
   override:
     - docker build -t sameersbn/bind .
-    - docker run -d -p 172.17.0.1:53:53/udp sameersbn/bind; sleep 10
-    - host www.google.com 172.17.0.1
+    - docker run --name bind -d sameersbn/bind; sleep 10
+    - docker run -it --rm --link bind:dns-server sameersbn/bind host www.google.com dns-server
