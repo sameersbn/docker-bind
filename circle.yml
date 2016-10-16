@@ -1,15 +1,13 @@
 machine:
   services:
     - docker
+
 dependencies:
-  cache_directories:
-    - "~/docker-bind"
   override:
     - docker info
-    - if [[ -e ~/docker-bind/image.tar ]]; then docker load --input ~/docker-bind/image.tar; fi
-    - docker build -t sameersbn/bind .
-    - mkdir -p ~/docker-bind; docker save --output ~/docker-bind/image.tar sameersbn/bind
+
 test:
   override:
+    - docker build -t sameersbn/bind .
     - docker run -d -p 172.17.42.1:53:53/udp sameersbn/bind; sleep 10
     - host www.google.com 172.17.42.1
