@@ -6,13 +6,10 @@ ENV DATA_DIR=/data \
     WEBMIN_VERSION=1.820
 
 RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
+ && wget http://www.webmin.com/jcameron-key.asc -qO - | apt-key add - \
+ && echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list \
  && apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y bind9 perl libnet-ssleay-perl openssl \
-      libauthen-pam-perl libpam-runtime libio-pty-perl dnsutils \
-      apt-show-versions python \
- && wget "http://prdownloads.sourceforge.net/webadmin/webmin_${WEBMIN_VERSION}_all.deb" -P /tmp/ \
- && dpkg -i /tmp/webmin_${WEBMIN_VERSION}_all.deb \
- && rm -rf /tmp/webmin_${WEBMIN_VERSION}_all.deb \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y bind9 webmin=${WEBMIN_VERSION}* \
  && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /sbin/entrypoint.sh
