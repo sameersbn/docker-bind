@@ -1,7 +1,12 @@
-Bind:
-  image: sameersbn/bind:latest
-  ports:
+version: '2'
+
+services:
+  bind:
+    restart: always
+    image: sameersbn/bind:latest
+    ports:
     - "53:53/udp"
-  volumes:
+    - "53:53/tcp"
+    - "10000:10000/tcp"
+    volumes:
     - /srv/docker/bind:/data
-  restart: always
