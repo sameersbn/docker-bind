@@ -13,4 +13,4 @@ test:
   override:
     - docker build --rm=false -t $DOCKER_PROJECT/$IMAGE_NAME .
     - docker run --name $IMAGE_NAME -d $DOCKER_PROJECT/$IMAGE_NAME; sleep 10
-    - docker run -it --rm --link bind:dns-server $DOCKER_PROJECT/$IMAGE_NAME host www.google.com dns-server
+    - docker run -it --link bind:dns-server $DOCKER_PROJECT/$IMAGE_NAME host www.google.com dns-server
