@@ -1,6 +1,9 @@
 machine:
   services:
     - docker
+  environment:
+    DOCKER_PROJECT: sameersbn
+    IMAGE_NAME: bind
 
 dependencies:
   override:
@@ -8,6 +11,6 @@ dependencies:
 
 test:
   override:
-    - docker build -t sameersbn/bind .
-    - docker run --name bind -d sameersbn/bind; sleep 10
-    - docker run -it --rm --link bind:dns-server sameersbn/bind host www.google.com dns-server
+    - docker build -t $DOCKER_PROJECT/$IMAGE_NAME .
+    - docker run --name $IMAGE_NAME -d $DOCKER_PROJECT/$IMAGE_NAME; sleep 10
+    - docker run -it --rm --link bind:dns-server $DOCKER_PROJECT/$IMAGE_NAME host www.google.com dns-server
