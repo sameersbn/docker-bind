@@ -3,7 +3,7 @@ version: '2'
 services:
   bind:
     restart: always
-    image: sameersbn/bind:9.9.5-20161104
+    image: sameersbn/bind:9.9.5-20161106
     ports:
     - "53:53/udp"
     - "53:53/tcp"
