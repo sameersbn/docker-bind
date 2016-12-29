@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20161126
+FROM sameersbn/ubuntu:14.04.20161217
 MAINTAINER sameer@damagehead.com
 
 ENV BIND_USER=bind \
