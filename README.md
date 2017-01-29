@@ -1,6 +1,6 @@
 [![Circle CI](https://circleci.com/gh/sameersbn/docker-bind.svg?style=shield)](https://circleci.com/gh/sameersbn/docker-bind) [![Docker Repository on Quay.io](https://quay.io/repository/sameersbn/bind/status "Docker Repository on Quay.io")](https://quay.io/repository/sameersbn/bind)
 
-# sameersbn/bind:9.9.5-20170115
+# sameersbn/bind:9.9.5-20170129
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
@@ -49,7 +49,7 @@ Automated builds of the image are available on [Dockerhub](https://hub.docker.co
 > **Note**: Builds are also available on [Quay.io](https://quay.io/repository/sameersbn/bind)
 
 ```bash
-docker pull sameersbn/bind:9.9.5-20170115
+docker pull sameersbn/bind:9.9.5-20170129
 ```
 
 Alternatively you can build the image yourself.
@@ -66,7 +66,7 @@ Start BIND using:
 docker run --name bind -d --restart=always \
   --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
-  sameersbn/bind:9.9.5-20170115
+  sameersbn/bind:9.9.5-20170129
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -85,7 +85,7 @@ You can customize the launch command of BIND server by specifying arguments to `
 docker run --name bind -it --rm \
   --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
-  sameersbn/bind:9.9.5-20170115 -h
+  sameersbn/bind:9.9.5-20170129 -h
 ```
 
 ## Persistence
@@ -110,7 +110,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull sameersbn/bind:9.9.5-20170115
+  docker pull sameersbn/bind:9.9.5-20170129
   ```
 
   2. Stop the currently running image:
@@ -130,7 +130,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name bind -d \
     [OPTIONS] \
-    sameersbn/bind:9.9.5-20170115
+    sameersbn/bind:9.9.5-20170129
   ```
 
 ## Shell Access
