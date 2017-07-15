@@ -16,6 +16,6 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
-EXPOSE 53/udp 53/tcp 10000/tcp
+EXPOSE 53/udp 53/tcp 10000-10010/tcp
 ENTRYPOINT ["/sbin/entrypoint.sh"]
 CMD ["/usr/sbin/named"]
