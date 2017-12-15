@@ -9,6 +9,7 @@
   - [Installation](#installation)
   - [Quickstart](#quickstart)
   - [Command-line arguments](#command-line-arguments)
+  - [Seed files](#seed-files)
   - [Persistence](#persistence)
 - [Maintenance](#maintenance)
   - [Upgrading](#upgrading)
@@ -87,6 +88,34 @@ docker run --name bind -it --rm \
   --volume /srv/docker/bind:/data \
   sameersbn/bind:9.9.5-20170626 -h
 ```
+
+## Seed files
+
+If you want to deploy as a proper immutable container across a docker swarm, you can
+put your seed configuration files in the /seed/etc and /seed/lib folders and they
+will be copied during container creation.
+
+This allows you to create a custom container with your own Dockerfile
+starting FROM this image, and just adding your own configuration files.
+
+Example Dockerfile:
+```Dockerfile
+FROM sameersbn/bind:9.9.5-20171215
+
+RUN mkdir -p /seed/etc && mkdir -p /seed/lib
+
+# This namde.conf.local file will point to the needed zone files
+COPY named.conf.local /seed/etc/
+# These are the actual zone files
+COPY mydomain.com.hosts /seed/lib/
+
+RUN chown bind:bind /seed/etc/named.conf.local \
+        && chown bind:bind /seed/lib/mydomain.com.hosts \
+        && chmod 644 /seed/lib/mydomain.com.hosts \
+        && chmod 775 /seed/etc/named.conf.local
+```
+
+You can build your own image and deploy on a swarm with docker stack deploy.
 
 ## Persistence
 
