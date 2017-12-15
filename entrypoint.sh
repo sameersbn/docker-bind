@@ -13,6 +13,9 @@ create_bind_data_dir() {
   # populate default bind configuration if it does not exist
   if [ ! -d ${BIND_DATA_DIR}/etc ]; then
     mv /etc/bind ${BIND_DATA_DIR}/etc
+    if [ -d /seed/etc ]; then
+        mv /seed/etc/* ${BIND_DATA_DIR}/etc/
+    fi
   fi
   rm -rf /etc/bind
   ln -sf ${BIND_DATA_DIR}/etc /etc/bind
@@ -21,7 +24,10 @@ create_bind_data_dir() {
 
   if [ ! -d ${BIND_DATA_DIR}/lib ]; then
     mkdir -p ${BIND_DATA_DIR}/lib
-    chown ${BIND_USER}:${BIND_USER} ${BIND_DATA_DIR}/lib
+    if [ -d /seed/lib ]; then
+        mv -R /seed/lib/* ${BIND_DATA_DIR}/lib/
+    fi
+    chown -R ${BIND_USER}:${BIND_USER} ${BIND_DATA_DIR}/lib
   fi
   rm -rf /var/lib/bind
   ln -sf ${BIND_DATA_DIR}/lib /var/lib/bind
