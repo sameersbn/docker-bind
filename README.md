@@ -101,6 +101,12 @@ mkdir -p /srv/docker/bind
 chcon -Rt svirt_sandbox_file_t /srv/docker/bind
 ```
 
+## Docker Secrets
+
+Read [Manage sensitive data with Docker Secrets](https://docs.docker.com/engine/swarm/secrets/) for more information about Docker Secrets. An example of using this image in Docker Swarm with Docker Secrets can be seen [in this docker-compose.yml](swarm/docker-compose.yml).
+
+Rather than supplying `ROOT_PASSWORD` via an environment variable, the path to a file containing the value for `ROOT_PASSWORD` can be supplied in the variable `ROOT_PASSWORD_FILE`.
+
 # Maintenance
 
 ## Upgrading
