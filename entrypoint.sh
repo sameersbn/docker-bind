@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+# you can use ROOT_PASSWORD to pass password through env or ROOT_PASSWORD_FILE to pass password through file
 ROOT_PASSWORD=${ROOT_PASSWORD:-password}
 WEBMIN_ENABLED=${WEBMIN_ENABLED:-true}
 
@@ -29,7 +30,7 @@ create_bind_data_dir() {
 
 create_webmin_data_dir() {
   mkdir -p ${WEBMIN_DATA_DIR}
-  chmod -R 0755 ${WEBMIN_DATA_DIR}
+  chmod -R u+rwX,go+rX,go-w ${WEBMIN_DATA_DIR}
   chown -R root:root ${WEBMIN_DATA_DIR}
 
   # populate the default webmin configuration if it does not exist
@@ -41,7 +42,11 @@ create_webmin_data_dir() {
 }
 
 set_root_passwd() {
-  echo "root:$ROOT_PASSWORD" | chpasswd
+  if [ ! -z "$ROOT_PASSWORD_FILE" ] && [ -f "$ROOT_PASSWORD_FILE" ]; then
+    echo "root:$(cat $ROOT_PASSWORD_FILE)" | chpasswd
+  else
+    echo "root:$ROOT_PASSWORD" | chpasswd
+  fi
 }
 
 create_pid_dir() {
