@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /workdir
     docker:
-      - image: docker:17.06.0-ce-git
+      - image: docker:18.03.0-ce-git
         environment:
           IMAGE_NAME: "sameersbn/bind"
 
@@ -11,7 +11,7 @@ jobs:
       - checkout
 
       - setup_remote_docker:
-          version: 17.06.0-ce
+          version: 18.03.1-ce
 
       - run:
           name: Docker info
