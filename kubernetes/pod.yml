@@ -10,7 +10,7 @@ spec:
       image: sameersbn/bind
       env:
         - name: WEBMIN_ENABLED
-          value: false
+          value: "false"
       ports:
         - containerPort: 53
           protocol: UDP
