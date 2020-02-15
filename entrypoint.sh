@@ -27,6 +27,9 @@ file_env 'ROOT_PASSWORD'
 
 ROOT_PASSWORD=${ROOT_PASSWORD:-password}
 WEBMIN_ENABLED=${WEBMIN_ENABLED:-true}
+WEBMIN_INIT_SSL_ENABLED=${WEBMIN_INIT_SSL_ENABLED:-true}
+WEBMIN_INIT_REDIRECT_PORT=${WEBMIN_INIT_REDIRECT_PORT:-10000}
+WEBMIN_INIT_REFERERS=${WEBMIN_INIT_REFERERS:-NONE}
 
 BIND_DATA_DIR=${DATA_DIR}/bind
 WEBMIN_DATA_DIR=${DATA_DIR}/webmin
@@ -64,6 +67,18 @@ create_webmin_data_dir() {
   ln -sf ${WEBMIN_DATA_DIR}/etc /etc/webmin
 }
 
+disable_webmin_ssl() {
+  sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
+}
+
+set_webmin_redirect_port() {
+  echo "redirect_port=$WEBMIN_INIT_REDIRECT_PORT" >> /etc/webmin/miniserv.conf
+}
+
+set_webmin_referers() {
+  echo "referers=$WEBMIN_REFERERS" >> /etc/webmin/config
+}
+
 set_root_passwd() {
   echo "root:$ROOT_PASSWORD" | chpasswd
 }
@@ -95,6 +110,13 @@ fi
 if [[ -z ${1} ]]; then
   if [ "${WEBMIN_ENABLED}" == "true" ]; then
     create_webmin_data_dir
+    if [ "${WEBMIN_INIT_SSL_ENABLED}" == "false" ]; then
+      disable_webmin_ssl
+    fi
+    set_webmin_redirect_port
+    if [ "${WEBMIN_INIT_REFERERS}" != "NONE" ]; then
+      set_webmin_referers
+    fi
     set_root_passwd
     echo "Starting webmin..."
     /etc/init.d/webmin start
