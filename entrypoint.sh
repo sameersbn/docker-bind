@@ -93,6 +93,19 @@ create_bind_cache_dir() {
   chown root:${BIND_USER} /var/cache/bind
 }
 
+first_init() {
+  if [ ! -f /data/.initialized ]; then
+    set_webmin_redirect_port
+    if [ "${WEBMIN_INIT_SSL_ENABLED}" == "false" ]; then
+      disable_webmin_ssl
+    fi
+    if [ "${WEBMIN_INIT_REFERERS}" != "NONE" ]; then
+      set_webmin_referers
+    fi
+    touch /data/.initialized
+  fi
+}
+
 create_pid_dir
 create_bind_data_dir
 create_bind_cache_dir
@@ -110,13 +123,7 @@ fi
 if [[ -z ${1} ]]; then
   if [ "${WEBMIN_ENABLED}" == "true" ]; then
     create_webmin_data_dir
-    if [ "${WEBMIN_INIT_SSL_ENABLED}" == "false" ]; then
-      disable_webmin_ssl
-    fi
-    set_webmin_redirect_port
-    if [ "${WEBMIN_INIT_REFERERS}" != "NONE" ]; then
-      set_webmin_referers
-    fi
+    first_init
     set_root_passwd
     echo "Starting webmin..."
     /etc/init.d/webmin start
