@@ -101,6 +101,20 @@ mkdir -p /srv/docker/bind
 chcon -Rt svirt_sandbox_file_t /srv/docker/bind
 ```
 
+## Reverse Proxying
+
+If you need to run Webmin behind a reverse-proxy such as Nginx, you can tweak the following environment variables:
+
+* `WEBMIN_INIT_SSL_ENABLED`: If Webmin should be served via SSL or not. Defaults to `true`. 
+   If you do the SSL termination at an earlier stage, set this to false.
+
+* `WEBMIN_INIT_REDIRECT_PORT`: The port Webmin is served from. 
+   Set this to your reverse proxy port, such as `443`. Defaults to `10000`.
+
+* `WEBMIN_INIT_REFERERS`: Sets the allowed referrers to Webmin. 
+   Set this to your domain name of the reverse proxy. Example: `mywebmin.example.com`. 
+   Defaults to empty (no referrer).
+
 # Maintenance
 
 ## Upgrading
