@@ -76,7 +76,7 @@ set_webmin_redirect_port() {
 }
 
 set_webmin_referers() {
-  echo "referers=$WEBMIN_REFERERS" >> /etc/webmin/config
+  echo "referers=$WEBMIN_INIT_REFERERS" >> /etc/webmin/config
 }
 
 set_root_passwd() {
