@@ -1,11 +1,11 @@
-FROM ubuntu:bionic-20190612 AS add-apt-repositories
+FROM ubuntu:bionic-20200403 AS add-apt-repositories
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y gnupg \
  && apt-key adv --fetch-keys http://www.webmin.com/jcameron-key.asc \
  && echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list
 
-FROM ubuntu:bionic-20190612
+FROM ubuntu:bionic-20200403
 
 LABEL maintainer="sameer@damagehead.com"
 
