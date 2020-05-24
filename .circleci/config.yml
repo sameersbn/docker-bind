@@ -217,12 +217,11 @@ jobs:
       - checkout
       - docker-load
       - run:
-          name: Update tag in docker-compose.yml
-          command: |
-            sed -i "s|image: sameersbn/bind:.*|image: sameersbn/bind:${CIRCLE_TAG:-latest}|" docker-compose.yml
+          name: Create test network
+          command: docker network create testnet
       - run:
           name: Launch bind container
-          command: docker-compose up -d --quiet-pull
+          command: docker run --name bind -d --net testnet sameersbn/bind:${CIRCLE_TAG:-latest}
       - run:
           name: Wait for bootup
           command: sleep 15
@@ -232,8 +231,7 @@ jobs:
       - run:
           name: Test image
           command: |
-              docker run --network bind-server:$(docker-compose ps -q bind) \
-                sameersbn/bind:${CIRCLE_TAG:-latest} host www.google.com bind-server
+              docker run --rm --net testnet sameersbn/bind:${CIRCLE_TAG:-latest} host www.google.com bind
 
   publish-dockerhub:
     executor: docker/machine
