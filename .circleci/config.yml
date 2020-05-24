@@ -223,15 +223,15 @@ jobs:
           name: Launch bind container
           command: docker run --name bind -d --net testnet sameersbn/bind:${CIRCLE_TAG:-latest}
       - run:
-          name: Wait for container bootup
+          name: Wait for bootup
           command: sleep 15
       - run:
           name: Container info
-          command: docker ps -a
+          command: docker ps
       - run:
           name: Test image
           command: |
-            docker run --rm --net testnet sameersbn/bind:${CIRCLE_TAG:-latest} host www.google.com bind
+              docker run --rm --net testnet sameersbn/bind:${CIRCLE_TAG:-latest} host www.google.com bind
 
   publish-dockerhub:
     executor: docker/machine
@@ -281,7 +281,7 @@ workflows:
     jobs:
       - shellcheck/check:
           name: shellcheck
-          ignore: SC2086,SC2181
+          ignore: SC2086,SC2181,SC2124
           filters:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/
