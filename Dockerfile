@@ -1,13 +1,15 @@
-FROM ubuntu:focal-20200423 AS add-apt-repositories
+FROM ubuntu AS add-apt-repositories
+
+MAINTAINER Antonio Cheong <windo.ac@gmail.com>
+
+LABEL Description="bind + webmin"
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y gnupg \
- && apt-key adv --fetch-keys http://www.webmin.com/jcameron-key.asc \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y curl gnupg \
+ && curl -sSL http://www.webmin.com/jcameron-key.asc | apt-key add \
  && echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list
 
-FROM ubuntu:focal-20200423
-
-LABEL maintainer="sameer@damagehead.com"
+FROM ubuntu
 
 ENV BIND_USER=bind \
     BIND_VERSION=9.16.1 \
@@ -18,12 +20,14 @@ COPY --from=add-apt-repositories /etc/apt/trusted.gpg /etc/apt/trusted.gpg
 
 COPY --from=add-apt-repositories /etc/apt/sources.list /etc/apt/sources.list
 
-RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes \
- && apt-get update \
+RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes
+
+RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      bind9=1:${BIND_VERSION}* bind9-host=1:${BIND_VERSION}* dnsutils \
-      webmin=${WEBMIN_VERSION}* \
- && rm -rf /var/lib/apt/lists/*
+      bind9 bind9-host dnsutils \
+      webmin
+
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 
