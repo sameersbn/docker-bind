@@ -13,7 +13,7 @@ services:
   
   bind:
     image: windoac/bind-webmin
-	hostname: {{.Node.Hostname}}
+    hostname: "{{.Node.Hostname}}"
     volumes:
       - NFS_Cheong-DS209_bind_data:/data
       - type: bind
@@ -36,10 +36,10 @@ services:
     restart: unless-stopped
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 2
       placement:
         constraints:
-          - "node.labels.bind==true"
+          - "node.labels.bind-webmin==true"
       update_config:
         parallelism: 1
         delay: 10s
