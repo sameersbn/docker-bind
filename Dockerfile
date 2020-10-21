@@ -25,7 +25,8 @@ RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       bind9 bind9-host dnsutils \
-      webmin
+      webmin \
+      cron
 
 RUN rm -rf /var/lib/apt/lists/*
 
