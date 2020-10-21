@@ -7,12 +7,13 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=Cheong-DS209.lan,nolock,rw
-      device: ":/volume1/docker/bind/data"
+      device: ":/volume1/docker/bind/data/{{.Node.Hostname}}"
 
 services:
   
   bind:
     image: windoac/bind-webmin
+	hostname: {{.Node.Hostname}}
     volumes:
       - NFS_Cheong-DS209_bind_data:/data
       - type: bind
@@ -23,7 +24,7 @@ services:
       - target: 10000
         published: 10000
         protocol: tcp
-        #mode: host
+        mode: host
       - target: 53
         published: 53
         protocol: tcp
