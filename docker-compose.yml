@@ -13,7 +13,7 @@ services:
   
   bind:
     image: windoac/bind-webmin
-    hostname: "{{.Node.Hostname}}"
+    #hostname: "{{.Node.Hostname}}"
     volumes:
       - NFS_Cheong-DS209_bind_data:/data
       - type: bind
@@ -33,7 +33,7 @@ services:
         published: 53
         protocol: udp
         #mode: host
-    restart: unless-stopped
+    #restart: unless-stopped
     deploy:
       mode: replicated
       replicas: 2
