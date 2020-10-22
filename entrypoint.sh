@@ -108,9 +108,17 @@ first_init() {
   fi
 }
 
+_term() {
+  kill -TERM "$child" 2>/dev/null
+  echo save the crontab before exit.
+  crontab -l > /data/crontab
+}
+
 create_pid_dir
 create_bind_data_dir
 create_bind_cache_dir
+
+trap _term SIGTERM
 
 # allow arguments to be passed to named
 if [[ ${1:0:1} = '-' ]]; then
@@ -130,9 +138,20 @@ if [[ -z ${1} ]]; then
     echo "Starting webmin..."
     /etc/init.d/webmin start
   fi
+  
+  if [ -f /data/crontab ]; then
+    crontab /data/crontab
+  fi
+  /etc/init.d/cron start
 
   echo "Starting named..."
-  exec "$(command -v named)" -u ${BIND_USER} -g ${EXTRA_ARGS}
+  #exec "$(command -v named)" -u ${BIND_USER} -g ${EXTRA_ARGS}
+  "$(command -v named)" -u ${BIND_USER} -g ${EXTRA_ARGS} &
+  
+  child=$!
+  
+  wait "$child"
+  
 else
   exec "$@"
 fi
