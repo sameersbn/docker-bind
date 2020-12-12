@@ -2,7 +2,8 @@ FROM ubuntu:focal-20200423 AS add-apt-repositories
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y gnupg \
- && apt-key adv --fetch-keys http://www.webmin.com/jcameron-key.asc \
+ && apt-get install -y curl \
+ && apt-key adv --fetch-keys https://www.webmin.com/jcameron-key.asc \
  && echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list
 
 FROM ubuntu:focal-20200423
@@ -14,6 +15,9 @@ ENV BIND_USER=bind \
     WEBMIN_VERSION=1.941 \
     DATA_DIR=/data
 
+RUN apt-get update \
+ && apt-get install -y curl
+ 
 COPY --from=add-apt-repositories /etc/apt/trusted.gpg /etc/apt/trusted.gpg
 
 COPY --from=add-apt-repositories /etc/apt/sources.list /etc/apt/sources.list
