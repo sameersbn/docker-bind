@@ -1,4 +1,4 @@
 all: build
 
 build:
-	@docker build --tag=sameersbn/bind .
+	@docker build --tag=windoac/bind-webmin:latest .
