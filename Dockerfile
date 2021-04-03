@@ -24,9 +24,8 @@ RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       bind9 bind9-host dnsutils \
       webmin \
-      cron
-
-RUN rm -rf /var/lib/apt/lists/*
+      cron \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 
