@@ -1,4 +1,4 @@
-FROM ubuntu:latest AS add-apt-repositories
+FROM ubuntu AS add-apt-repositories
 
 MAINTAINER Antonio Cheong <windo.ac@gmail.com>
 
@@ -9,7 +9,7 @@ RUN apt-get update \
  && curl -sSL http://www.webmin.com/jcameron-key.asc | apt-key add \
  && echo "deb http://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list
 
-FROM ubuntu:latest
+FROM ubuntu
 
 ENV BIND_USER=bind \
     DATA_DIR=/data
@@ -21,7 +21,6 @@ COPY --from=add-apt-repositories /etc/apt/sources.list /etc/apt/sources.list
 RUN rm -rf /etc/apt/apt.conf.d/docker-gzip-indexes
 
 RUN apt-get update \
- && apt-get dist-upgrade -y \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       bind9 bind9-host dnsutils \
       webmin \
