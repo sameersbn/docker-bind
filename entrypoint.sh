@@ -132,7 +132,11 @@ if [[ -z ${1} ]]; then
   fi
 
   echo "Starting named..."
-  exec "$(command -v named)" -u ${BIND_USER} -g ${EXTRA_ARGS}
+  if [ "${BIND_LOG_STDERR:-true}" == "true" ]; then
+    exec "$(command -v named)" -u ${BIND_USER} -g ${EXTRA_ARGS}
+  else
+    exec "$(command -v named)" -u ${BIND_USER} -f ${EXTRA_ARGS}
+  fi
 else
   exec "$@"
 fi
