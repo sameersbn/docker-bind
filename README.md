@@ -75,6 +75,8 @@ When the container is started the [Webmin](http://www.webmin.com/) service is al
 
 The launch of Webmin can be disabled by adding `--env WEBMIN_ENABLED=false` to the `docker run` command. Note that the `ROOT_PASSWORD` parameter has no effect when the launch of Webmin is disabled.
 
+To allow bind log to file by adding `--env BIND_LOG_STDERR=false` to the `docker run` command. That make bind not force all log to STDERR by using -f instead of -g to start the named process.
+
 Read the blog post [Deploying a DNS Server using Docker](http://www.damagehead.com/blog/2015/04/28/deploying-a-dns-server-using-docker/) for an example use case.
 
 ## Command-line arguments
