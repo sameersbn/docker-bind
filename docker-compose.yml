@@ -2,12 +2,7 @@ version: "3.2"
 
 volumes:
 
-  NFS_Cheong-DS209_bind_data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=Cheong-DS209.lan,nolock,rw
-      device: ":/volume1/docker/bind/data/{{.Node.Hostname}}"
+  data:
 
 services:
   
@@ -15,33 +10,15 @@ services:
     image: windoac/bind-webmin
     #hostname: "{{.Node.Hostname}}"
     volumes:
-      - NFS_Cheong-DS209_bind_data:/data
-      - type: bind
-        source: /etc/localtime
-        target: /etc/localtime
-        read_only: true
+      - data:/data
     ports:
-      - target: 10000
-        published: 10000
-        protocol: tcp
-        mode: host
-      - target: 53
-        published: 53
-        protocol: tcp
-        #mode: host
-      - target: 53
-        published: 53
-        protocol: udp
-        #mode: host
-    #restart: unless-stopped
+      - 10000:10000
+      - 53:53
+      - 53:53/udp
+    environment:
+      TZ : Asia/Hong_Kong
     deploy:
       mode: replicated
       replicas: 2
-      placement:
-        constraints:
-          - "node.labels.bind-webmin==true"
-      update_config:
-        parallelism: 1
-        delay: 10s
       restart_policy:
         condition: on-failure
