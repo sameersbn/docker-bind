@@ -4,6 +4,7 @@ on:
   create:
     tags:
       - v*
+  push:
 
 jobs:
   buildx:

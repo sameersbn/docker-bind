@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+# this is a fake systemctl command to make webmin can reload the bind9
+if [ "$2" == "bind9.service" ]     
+then
+        service named $1
+fi
